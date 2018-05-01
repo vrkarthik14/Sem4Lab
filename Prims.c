@@ -49,15 +49,7 @@ while(ne<n)
      }
     cost[a][b] = cost[b][a] = 999;
 
-    printf("\nmatrix is:\n");
-  	for(i=1;i<=n;i++)
-  	{
-    	for(j=1;j<=n;j++)
-    	{
-      	printf("%d  ",cost[i][j]);
-    	 }
-	printf("\n");
-   	}
+    
 }
    printf("\n minimum cost = %d \n",min_cost);
 
