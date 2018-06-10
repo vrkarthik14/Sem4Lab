@@ -1,42 +1,64 @@
-#include <stdio.h>
-int count =0;
-int dfs(int [20][20],int,int[20],int);
-void main()
-{
-        int n,a[20][20],i,j,visited[20],source,visitedorder[20];
-        printf("Enter the no of vertices\n");
-        scanf("%d",&n);
-        printf("Enter the adjacency matrix\n");
-        for(i=1; i<=n; i++)
-                for(j=1; j<=n; j++)
-                        scanf("%d",&a[i][j]);
-        for(i=1; i<=n; i++)
-                visited[i]=0;
-        printf("Enter source node\n");
-        scanf("%d",&source);
-        for(i=1; i<=n; i++)
-                if(visited[i]==0)
-                        dfs(a,n,visited,i);
-        for(i=1; i<=n; i++)
-        {
-                visitedorder[visited[i]]=i;
-        }
-        printf("DFS traversal= \n");
-        for(i=1; i<=n; i++)
-        {
-                printf("%c \t",visitedorder[i]+64);
-        }
+#include<stdio.h>
+#include<string.h>
+
+// visited array
+int N;
+int visited[15];
+int graph[15][15];
+int front = 0;
+int rear = 0;
+int q[15] = { 0 };
+ 
+void bfs(int v);
+ 
+int main() {
+    int i,j;
+    printf("Enter number of vertices\n");
+    scanf("%d",&N);
+     printf("\nEnter adjecency matrix of the graph:");
+   
+    for(i=0;i<N;i++)
+       for(j=0;j<N;j++)
+            scanf("%d",&graph[i][j]);
+     
+    
+    // make all vertex unvisited this function set all to a value - in strin.h
+    memset(visited, 0, sizeof(visited));
+ 
+    // run bfs from 0th vertex
+    bfs(0);
+    for(i=0;i<N;i++)
+     if(!visited[i])
+       bfs(i);
+    
+    return 0;
 }
-int dfs(int a[20][20],int n,int visited[20],int source)
-{
-        count++;
-        int v;
-        visited[source]=count;
-        for(v=1; v<=n; v++)
-        {
-                if(a[source][v]==1&&visited[v]==0)
-                {
-                        dfs(a,n,visited,v);
-                }
+ 
+void bfs(int v) {
+ 
+    // make vertex v visited
+    visited[v] = 1;
+    // enqueue vertex v
+    q[rear] = v; // insert at rear
+    rear++; // increment rear
+ 
+    while (rear != front) // condition for empty queue
+    {
+        // dequeue
+        int u = q[front];
+        printf("%d ", u);
+        front++;
+ 
+        // check adjacent nodes from u
+        int i = 0;
+        for (i = 0; i < N; i++) {
+            // if there is adjacent vertex enqueue it
+            if (!visited[i] && graph[u][i]) {
+                q[rear] = i;
+                rear++;
+                visited[i] = 1;
+            }
         }
+    }
+    //printf("\n");
 }
