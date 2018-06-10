@@ -1,14 +1,13 @@
 #include<stdio.h>
 #include<string.h>
 
- 
 // visited array
 int N;
-int visited[10];
-int graph[10][10];
+int visited[15];
+int graph[15][15];
 int front = 0;
 int rear = 0;
-int q[10] = { 0 };
+int q[15] = { 0 };
  
 void bfs(int v);
  
@@ -28,6 +27,10 @@ int main() {
  
     // run bfs from 0th vertex
     bfs(0);
+    for(i=0;i<N;i++)
+     if(!visited[i])
+       bfs(i);
+    
     return 0;
 }
  
@@ -57,5 +60,5 @@ void bfs(int v) {
             }
         }
     }
-    printf("\n");
+    //printf("\n");
 }
