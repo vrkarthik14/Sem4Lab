@@ -1,64 +1,42 @@
 #include<stdio.h>
-#include<string.h>
-
-// visited array
-int N;
-int visited[15];
-int graph[15][15];
-int front = 0;
-int rear = 0;
-int q[15] = { 0 };
  
-void bfs(int v);
+void DFS(int);
+int G[15][15],visited[15],n;    //n is no of vertices and graph is sorted in array G[10][10]
  
-int main() {
-    int i,j;
-    printf("Enter number of vertices\n");
-    scanf("%d",&N);
-     printf("\nEnter adjecency matrix of the graph:");
+void main()
+{
+    int i,j,sou;
+    printf("Enter number of vertices:");
    
-    for(i=0;i<N;i++)
-       for(j=0;j<N;j++)
-            scanf("%d",&graph[i][j]);
-     
-    
-    // make all vertex unvisited this function set all to a value - in strin.h
-    memset(visited, 0, sizeof(visited));
+    scanf("%d",&n);
  
-    // run bfs from 0th vertex
-    bfs(0);
-    for(i=0;i<N;i++)
-     if(!visited[i])
-       bfs(i);
-    
-    return 0;
+    //read the adjecency matrix
+    printf("\nEnter adjecency matrix of the graph:");
+   
+    for(i=0;i<n;i++)
+       for(j=0;j<n;j++)
+            scanf("%d",&G[i][j]);
+ 
+    //visited is initialized to zero
+   for(i=0;i<n;i++)
+        visited[i]=0;
+        
+   printf("Enter source of search from 0 to n-1");
+   scanf("%d",sou)     
+   DFS(sou);
+ 
+   for(i=0;i<n;i++)
+       if(visited[i] == 0)
+         DFS(i);
 }
  
-void bfs(int v) {
- 
-    // make vertex v visited
-    visited[v] = 1;
-    // enqueue vertex v
-    q[rear] = v; // insert at rear
-    rear++; // increment rear
- 
-    while (rear != front) // condition for empty queue
-    {
-        // dequeue
-        int u = q[front];
-        printf("%d ", u);
-        front++;
- 
-        // check adjacent nodes from u
-        int i = 0;
-        for (i = 0; i < N; i++) {
-            // if there is adjacent vertex enqueue it
-            if (!visited[i] && graph[u][i]) {
-                q[rear] = i;
-                rear++;
-                visited[i] = 1;
-            }
-        }
-    }
-    //printf("\n");
+void DFS(int i)
+{
+    int j;
+    printf("\n%d",i);
+    visited[i]=1;
+    
+    for(j=0;j<n;j++)
+       if(!visited[j]&&G[i][j]==1)
+            DFS(j);
 }
